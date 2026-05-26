@@ -1,0 +1,657 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\Han\Desktop\UEL\Năm 2 - HK4\Kinh tế lượng_Lương Thanh Quỳnh (DH_HK251)\Tiểu luận Giữa kì\K244131500_KTL_TIỂU LUẬN.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}21 Nov 2025, 08:32:29
+
+{com}. * ==============================================================================
+
+. * 1. KHỞI TẠO VÀ MÔ TẢ DỮ LIỆU
+
+. * ==============================================================================
+
+. import delimited "C:\Users\Han\Desktop\UEL\Năm 2 - HK4\Kinh tế lượng_Lương Thanh Quỳnh (DH_HK251)\Tiểu luận Giữa kì\Bộ dữ liệu\BostonHousing.csv"
+{res}{txt}(encoding automatically selected: ISO-8859-1)
+{text}(14 vars, 506 obs)
+
+{com}. describe
+
+{txt}Contains data
+ Observations:{res}           506                  
+{txt}    Variables:{res}            14                  
+{txt}{hline}
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+{hline}
+{p 0 48}{res}{bind:crim           }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}CRIM{p_end}
+{p 0 48}{bind:zn             }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}ZN{p_end}
+{p 0 48}{bind:indus          }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}INDUS{p_end}
+{p 0 48}{bind:chas           }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}CHAS{p_end}
+{p 0 48}{bind:nox            }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}NOX{p_end}
+{p 0 48}{bind:rm             }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}RM{p_end}
+{p 0 48}{bind:age            }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}AGE{p_end}
+{p 0 48}{bind:dis            }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}DIS{p_end}
+{p 0 48}{bind:rad            }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}RAD{p_end}
+{p 0 48}{bind:tax            }{txt}{bind: int     }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}TAX{p_end}
+{p 0 48}{bind:ptratio        }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}PTRATIO{p_end}
+{p 0 48}{bind:lstat          }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}LSTAT{p_end}
+{p 0 48}{bind:medv           }{txt}{bind: float   }{bind:{txt}%9.0g     }{space 1}{bind:         }{bind:  }{res}{res}MEDV{p_end}
+{p 0 48}{bind:catmedv        }{txt}{bind: byte    }{bind:{txt}%8.0g     }{space 1}{bind:         }{bind:  }{res}{res}CAT. MEDV{p_end}
+{txt}{hline}
+Sorted by: 
+{res}     Note: Dataset has changed since last saved.
+
+{com}. summarize
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}crim {c |}{res}        506    3.613524    8.601545     .00632    88.9762
+{txt}{space 10}zn {c |}{res}        506    11.36364    23.32245          0        100
+{txt}{space 7}indus {c |}{res}        506    11.13678    6.860353        .46      27.74
+{txt}{space 8}chas {c |}{res}        506      .06917     .253994          0          1
+{txt}{space 9}nox {c |}{res}        506    .5546951    .1158777       .385       .871
+{txt}{hline 13}{c +}{hline 57}
+{space 10}rm {c |}{res}        506    6.284634    .7026172      3.561       8.78
+{txt}{space 9}age {c |}{res}        506     68.5749    28.14886        2.9        100
+{txt}{space 9}dis {c |}{res}        506    3.795043     2.10571     1.1296    12.1265
+{txt}{space 9}rad {c |}{res}        506    9.549407    8.707259          1         24
+{txt}{space 9}tax {c |}{res}        506    408.2372    168.5371        187        711
+{txt}{hline 13}{c +}{hline 57}
+{space 5}ptratio {c |}{res}        506    18.45553    2.164946       12.6         22
+{txt}{space 7}lstat {c |}{res}        506    12.65306    7.141062       1.73      37.97
+{txt}{space 8}medv {c |}{res}        506    22.53281    9.197104          5         50
+{txt}{space 5}catmedv {c |}{res}        506    .1660079     .372456          0          1
+
+{com}. * ------------------------------------------------------------------------------
+
+. * 2. XỬ LÝ BIẾN (DATA PROCESSING)
+
+. * ------------------------------------------------------------------------------
+
+. * a. Tạo biến giả (Dummy Variables)
+
+. tabulate chas
+
+       {txt}CHAS {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        471       93.08       93.08
+{txt}          1 {c |}{res}         35        6.92      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        506      100.00
+
+{com}. gen chas_dummy = (chas == 1)
+
+. gen rad_high = (rad >= 5)
+
+. tabulate chas_dummy
+
+ {txt}chas_dummy {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        471       93.08       93.08
+{txt}          1 {c |}{res}         35        6.92      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        506      100.00
+
+{com}. tabulate rad_high
+
+   {txt}rad_high {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        192       37.94       37.94
+{txt}          1 {c |}{res}        314       62.06      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        506      100.00
+
+{com}. * b. Chuyển đổi Logarit (Log Transformation)
+
+. foreach var of varlist medv crim zn indus nox rm age dis rad tax ptratio lstat {c -(}
+{txt}  2{com}. 
+.     gen l_`var' = log(`var' + 0.01)
+{txt}  3{com}. 
+. {c )-}
+
+. * c. Tạo biến Tương tác (Interaction Term)
+
+. gen rm_lstat = rm * lstat
+
+. * d. [QUAN TRỌNG] Tạo biến Định tính 3 phạm trù (AGE_CAT)
+
+. gen age_cat = 1 if age < 50
+{txt}(359 missing values generated)
+
+{com}. replace age_cat = 2 if age >= 50 & age < 90
+{txt}(189 real changes made)
+
+{com}. replace age_cat = 3 if age >= 90
+{txt}(170 real changes made)
+
+{com}. label define age_lbl 1 "Moi" 2 "TrungBinh" 3 "LauDoi"
+
+. label values age_cat age_lbl
+
+. label variable age_cat "Phan loai tuoi nha (3 nhom)"
+
+. tabulate age_cat
+
+  {txt}Phan loai {c |}
+tuoi nha (3 {c |}
+      nhom) {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        Moi {c |}{res}        147       29.05       29.05
+{txt}  TrungBinh {c |}{res}        189       37.35       66.40
+{txt}     LauDoi {c |}{res}        170       33.60      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        506      100.00
+
+{com}. * ------------------------------------------------------------------------------
+
+. * 3. ƯỚC LƯỢNG VÀ SO SÁNH CÁC MÔ HÌNH (MODEL SELECTION)
+
+. * ------------------------------------------------------------------------------
+
+. * Mô hình 1: OLS Cơ bản
+
+. reg medv crim zn indus chas_dummy nox rm age dis rad tax ptratio lstat
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       506
+{txt}{hline 13}{c +}{hline 34}   F(12, 493)      = {res}   113.54
+{txt}       Model {c |} {res} 31366.8768        12   2613.9064   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 11349.4188       493  23.0211335   {txt}R-squared       ={res}    0.7343
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7278
+{txt}       Total {c |} {res} 42716.2956       505   84.586724   {txt}Root MSE        =   {res}  4.798
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}        medv{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}crim {c |}{col 14}{res}{space 2}-.1213886{col 26}{space 2} .0330004{col 37}{space 1}   -3.68{col 46}{space 3}0.000{col 54}{space 4}-.1862274{col 67}{space 3}-.0565498
+{txt}{space 10}zn {c |}{col 14}{res}{space 2} .0469635{col 26}{space 2} .0138791{col 37}{space 1}    3.38{col 46}{space 3}0.001{col 54}{space 4} .0196939{col 67}{space 3}  .074233
+{txt}{space 7}indus {c |}{col 14}{res}{space 2} .0134677{col 26}{space 2} .0621447{col 37}{space 1}    0.22{col 46}{space 3}0.829{col 54}{space 4}-.1086334{col 67}{space 3} .1355689
+{txt}{space 2}chas_dummy {c |}{col 14}{res}{space 2} 2.839993{col 26}{space 2} .8700073{col 37}{space 1}    3.26{col 46}{space 3}0.001{col 54}{space 4} 1.130614{col 67}{space 3} 4.549373
+{txt}{space 9}nox {c |}{col 14}{res}{space 2}-18.75803{col 26}{space 2} 3.851355{col 37}{space 1}   -4.87{col 46}{space 3}0.000{col 54}{space 4}-26.32512{col 67}{space 3}-11.19093
+{txt}{space 10}rm {c |}{col 14}{res}{space 2} 3.658119{col 26}{space 2} .4202457{col 37}{space 1}    8.70{col 46}{space 3}0.000{col 54}{space 4} 2.832425{col 67}{space 3} 4.483812
+{txt}{space 9}age {c |}{col 14}{res}{space 2} .0036107{col 26}{space 2} .0133294{col 37}{space 1}    0.27{col 46}{space 3}0.787{col 54}{space 4}-.0225788{col 67}{space 3} .0298002
+{txt}{space 9}dis {c |}{col 14}{res}{space 2}-1.490754{col 26}{space 2} .2016227{col 37}{space 1}   -7.39{col 46}{space 3}0.000{col 54}{space 4}-1.886899{col 67}{space 3}-1.094608
+{txt}{space 9}rad {c |}{col 14}{res}{space 2} .2894046{col 26}{space 2} .0669079{col 37}{space 1}    4.33{col 46}{space 3}0.000{col 54}{space 4} .1579448{col 67}{space 3} .4208643
+{txt}{space 9}tax {c |}{col 14}{res}{space 2} -.012682{col 26}{space 2}  .003801{col 37}{space 1}   -3.34{col 46}{space 3}0.001{col 54}{space 4}-.0201501{col 67}{space 3}-.0052139
+{txt}{space 5}ptratio {c |}{col 14}{res}{space 2}-.9375329{col 26}{space 2} .1322062{col 37}{space 1}   -7.09{col 46}{space 3}0.000{col 54}{space 4} -1.19729{col 67}{space 3}-.6777758
+{txt}{space 7}lstat {c |}{col 14}{res}{space 2}-.5520191{col 26}{space 2} .0506588{col 37}{space 1}  -10.90{col 46}{space 3}0.000{col 54}{space 4}-.6515528{col 67}{space 3}-.4524854
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 41.61727{col 26}{space 2} 4.936039{col 37}{space 1}    8.43{col 46}{space 3}0.000{col 54}{space 4}   31.919{col 67}{space 3} 51.31554
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. estimates store ols
+
+. * Mô hình 2: Robust Standard Errors
+
+. reg medv crim zn indus chas_dummy nox rm age dis rad_high tax ptratio lstat, robust
+
+{txt}Linear regression                               Number of obs     = {res}       506
+                                                {txt}F(12, 493)        =  {res}    92.12
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.7251
+                                                {txt}Root MSE          =    {res} 4.8809
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}        medv{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}crim {c |}{col 14}{res}{space 2}-.0833715{col 26}{space 2} .0271665{col 37}{space 1}   -3.07{col 46}{space 3}0.002{col 54}{space 4} -.136748{col 67}{space 3}-.0299951
+{txt}{space 10}zn {c |}{col 14}{res}{space 2}  .044609{col 26}{space 2} .0139726{col 37}{space 1}    3.19{col 46}{space 3}0.002{col 54}{space 4} .0171558{col 67}{space 3} .0720623
+{txt}{space 7}indus {c |}{col 14}{res}{space 2}-.0412924{col 26}{space 2} .0572897{col 37}{space 1}   -0.72{col 46}{space 3}0.471{col 54}{space 4}-.1538545{col 67}{space 3} .0712697
+{txt}{space 2}chas_dummy {c |}{col 14}{res}{space 2} 3.220195{col 26}{space 2} 1.330046{col 37}{space 1}    2.42{col 46}{space 3}0.016{col 54}{space 4} .6069379{col 67}{space 3} 5.833452
+{txt}{space 9}nox {c |}{col 14}{res}{space 2}-17.14431{col 26}{space 2} 3.894363{col 37}{space 1}   -4.40{col 46}{space 3}0.000{col 54}{space 4} -24.7959{col 67}{space 3}-9.492708
+{txt}{space 10}rm {c |}{col 14}{res}{space 2} 3.946839{col 26}{space 2} .8360147{col 37}{space 1}    4.72{col 46}{space 3}0.000{col 54}{space 4} 2.304247{col 67}{space 3}  5.58943
+{txt}{space 9}age {c |}{col 14}{res}{space 2}-.0013772{col 26}{space 2} .0165905{col 37}{space 1}   -0.08{col 46}{space 3}0.934{col 54}{space 4}-.0339741{col 67}{space 3} .0312197
+{txt}{space 9}dis {c |}{col 14}{res}{space 2}-1.515916{col 26}{space 2} .2216696{col 37}{space 1}   -6.84{col 46}{space 3}0.000{col 54}{space 4} -1.95145{col 67}{space 3}-1.080382
+{txt}{space 4}rad_high {c |}{col 14}{res}{space 2} .7118328{col 26}{space 2} .4621453{col 37}{space 1}    1.54{col 46}{space 3}0.124{col 54}{space 4}-.1961845{col 67}{space 3}  1.61985
+{txt}{space 9}tax {c |}{col 14}{res}{space 2}-.0010735{col 26}{space 2} .0026542{col 37}{space 1}   -0.40{col 46}{space 3}0.686{col 54}{space 4}-.0062884{col 67}{space 3} .0041415
+{txt}{space 5}ptratio {c |}{col 14}{res}{space 2}-.7785796{col 26}{space 2} .1192612{col 37}{space 1}   -6.53{col 46}{space 3}0.000{col 54}{space 4}-1.012903{col 67}{space 3}-.5442567
+{txt}{space 7}lstat {c |}{col 14}{res}{space 2}-.5378697{col 26}{space 2}  .103211{col 37}{space 1}   -5.21{col 46}{space 3}0.000{col 54}{space 4}-.7406574{col 67}{space 3}-.3350821
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 34.28841{col 26}{space 2} 7.047094{col 37}{space 1}    4.87{col 46}{space 3}0.000{col 54}{space 4} 20.44236{col 67}{space 3} 48.13445
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. estimates store robust
+
+. * Mô hình 3: Bán Log (Semi-Log)
+
+. reg l_medv crim zn indus chas_dummy nox rm age dis rad_high tax ptratio lstat
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       506
+{txt}{hline 13}{c +}{hline 34}   F(12, 493)      = {res}   140.85
+{txt}       Model {c |} {res} 65.2479529        12   5.4373294   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 19.0320568       493  .038604578   {txt}R-squared       ={res}    0.7742
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7687
+{txt}       Total {c |} {res} 84.2800097       505  .166891108   {txt}Root MSE        =   {res} .19648
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      l_medv{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}crim {c |}{col 14}{res}{space 2} -.009117{col 26}{space 2} .0012992{col 37}{space 1}   -7.02{col 46}{space 3}0.000{col 54}{space 4}-.0116697{col 67}{space 3}-.0065643
+{txt}{space 10}zn {c |}{col 14}{res}{space 2} .0011781{col 26}{space 2} .0005808{col 37}{space 1}    2.03{col 46}{space 3}0.043{col 54}{space 4} .0000369{col 67}{space 3} .0023193
+{txt}{space 7}indus {c |}{col 14}{res}{space 2} .0000345{col 26}{space 2} .0025301{col 37}{space 1}    0.01{col 46}{space 3}0.989{col 54}{space 4}-.0049367{col 67}{space 3} .0050057
+{txt}{space 2}chas_dummy {c |}{col 14}{res}{space 2} .1251315{col 26}{space 2}  .035435{col 37}{space 1}    3.53{col 46}{space 3}0.000{col 54}{space 4} .0555092{col 67}{space 3} .1947537
+{txt}{space 9}nox {c |}{col 14}{res}{space 2} -.765998{col 26}{space 2}  .158523{col 37}{space 1}   -4.83{col 46}{space 3}0.000{col 54}{space 4}-1.077462{col 67}{space 3} -.454534
+{txt}{space 10}rm {c |}{col 14}{res}{space 2} .0972442{col 26}{space 2} .0169746{col 37}{space 1}    5.73{col 46}{space 3}0.000{col 54}{space 4} .0638928{col 67}{space 3} .1305956
+{txt}{space 9}age {c |}{col 14}{res}{space 2} .0000992{col 26}{space 2} .0005442{col 37}{space 1}    0.18{col 46}{space 3}0.855{col 54}{space 4}  -.00097{col 67}{space 3} .0011684
+{txt}{space 9}dis {c |}{col 14}{res}{space 2}-.0512077{col 26}{space 2} .0082663{col 37}{space 1}   -6.19{col 46}{space 3}0.000{col 54}{space 4}-.0674491{col 67}{space 3}-.0349662
+{txt}{space 4}rad_high {c |}{col 14}{res}{space 2} .0493085{col 26}{space 2} .0235156{col 37}{space 1}    2.10{col 46}{space 3}0.037{col 54}{space 4} .0031054{col 67}{space 3} .0955116
+{txt}{space 9}tax {c |}{col 14}{res}{space 2}-.0001305{col 26}{space 2} .0001059{col 37}{space 1}   -1.23{col 46}{space 3}0.219{col 54}{space 4}-.0003385{col 67}{space 3} .0000776
+{txt}{space 5}ptratio {c |}{col 14}{res}{space 2}-.0289811{col 26}{space 2} .0055885{col 37}{space 1}   -5.19{col 46}{space 3}0.000{col 54}{space 4}-.0399613{col 67}{space 3}-.0180009
+{txt}{space 7}lstat {c |}{col 14}{res}{space 2}-.0294816{col 26}{space 2} .0020758{col 37}{space 1}  -14.20{col 46}{space 3}0.000{col 54}{space 4}-.0335601{col 67}{space 3}-.0254031
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 3.977391{col 26}{space 2} .1921509{col 37}{space 1}   20.70{col 46}{space 3}0.000{col 54}{space 4} 3.599855{col 67}{space 3} 4.354926
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. estimates store blog
+
+. * Mô hình 4: Log-Log (Double Log)
+
+. reg l_medv l_crim l_zn l_indus chas_dummy l_nox l_rm l_age l_dis l_rad l_tax l_ptratio l_lstat
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       506
+{txt}{hline 13}{c +}{hline 34}   F(12, 493)      = {res}   131.43
+{txt}       Model {c |} {res} 64.2096196        12  5.35080163   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 20.0703901       493   .04071073   {txt}R-squared       ={res}    0.7619
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7561
+{txt}       Total {c |} {res} 84.2800097       505  .166891108   {txt}Root MSE        =   {res} .20177
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}      l_medv{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 6}l_crim {c |}{col 14}{res}{space 2}-.0428578{col 26}{space 2} .0117225{col 37}{space 1}   -3.66{col 46}{space 3}0.000{col 54}{space 4}-.0658901{col 67}{space 3}-.0198255
+{txt}{space 8}l_zn {c |}{col 14}{res}{space 2}-.0063331{col 26}{space 2} .0037905{col 37}{space 1}   -1.67{col 46}{space 3}0.095{col 54}{space 4}-.0137807{col 67}{space 3} .0011144
+{txt}{space 5}l_indus {c |}{col 14}{res}{space 2} .0122146{col 26}{space 2} .0219121{col 37}{space 1}    0.56{col 46}{space 3}0.577{col 54}{space 4}-.0308381{col 67}{space 3} .0552672
+{txt}{space 2}chas_dummy {c |}{col 14}{res}{space 2} .1046325{col 26}{space 2} .0367133{col 37}{space 1}    2.85{col 46}{space 3}0.005{col 54}{space 4} .0324986{col 67}{space 3} .1767663
+{txt}{space 7}l_nox {c |}{col 14}{res}{space 2}-.3589005{col 26}{space 2} .1111608{col 37}{space 1}   -3.23{col 46}{space 3}0.001{col 54}{space 4}-.5773078{col 67}{space 3}-.1404931
+{txt}{space 8}l_rm {c |}{col 14}{res}{space 2} .3340994{col 26}{space 2} .1105667{col 37}{space 1}    3.02{col 46}{space 3}0.003{col 54}{space 4} .1168594{col 67}{space 3} .5513395
+{txt}{space 7}l_age {c |}{col 14}{res}{space 2} .0484529{col 26}{space 2} .0225361{col 37}{space 1}    2.15{col 46}{space 3}0.032{col 54}{space 4} .0041743{col 67}{space 3} .0927315
+{txt}{space 7}l_dis {c |}{col 14}{res}{space 2}-.1448345{col 26}{space 2} .0368086{col 37}{space 1}   -3.93{col 46}{space 3}0.000{col 54}{space 4}-.2171555{col 67}{space 3}-.0725134
+{txt}{space 7}l_rad {c |}{col 14}{res}{space 2} .1040061{col 26}{space 2} .0225435{col 37}{space 1}    4.61{col 46}{space 3}0.000{col 54}{space 4} .0597131{col 67}{space 3} .1482992
+{txt}{space 7}l_tax {c |}{col 14}{res}{space 2} -.202003{col 26}{space 2} .0459392{col 37}{space 1}   -4.40{col 46}{space 3}0.000{col 54}{space 4}-.2922637{col 67}{space 3}-.1117423
+{txt}{space 3}l_ptratio {c |}{col 14}{res}{space 2}-.6071768{col 26}{space 2} .0966179{col 37}{space 1}   -6.28{col 46}{space 3}0.000{col 54}{space 4}-.7970104{col 67}{space 3}-.4173431
+{txt}{space 5}l_lstat {c |}{col 14}{res}{space 2}-.4289671{col 26}{space 2}  .026052{col 37}{space 1}  -16.47{col 46}{space 3}0.000{col 54}{space 4}-.4801537{col 67}{space 3}-.3777804
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}  5.89284{col 26}{space 2} .4283523{col 37}{space 1}   13.76{col 46}{space 3}0.000{col 54}{space 4} 5.051218{col 67}{space 3} 6.734461
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. estimates store llog
+
+. * Mô hình 5: Có biến tương tác (Interaction)
+
+. reg medv crim zn indus chas_dummy nox rm age dis rad_high tax ptratio lstat rm_lstat
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}       506
+{txt}{hline 13}{c +}{hline 34}   F(13, 492)      = {res}   144.62
+{txt}       Model {c |} {res} 33856.0744        13  2604.31341   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 8860.22122       492  18.0085797   {txt}R-squared       ={res}    0.7926
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7871
+{txt}       Total {c |} {res} 42716.2956       505   84.586724   {txt}Root MSE        =   {res} 4.2437
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}        medv{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}crim {c |}{col 14}{res}{space 2}-.1219239{col 26}{space 2} .0282265{col 37}{space 1}   -4.32{col 46}{space 3}0.000{col 54}{space 4}-.1773832{col 67}{space 3}-.0664646
+{txt}{space 10}zn {c |}{col 14}{res}{space 2}  .024365{col 26}{space 2} .0126465{col 37}{space 1}    1.93{col 46}{space 3}0.055{col 54}{space 4}-.0004829{col 67}{space 3} .0492128
+{txt}{space 7}indus {c |}{col 14}{res}{space 2}-.0112805{col 26}{space 2}  .054698{col 37}{space 1}   -0.21{col 46}{space 3}0.837{col 54}{space 4}-.1187511{col 67}{space 3} .0961901
+{txt}{space 2}chas_dummy {c |}{col 14}{res}{space 2} 2.522804{col 26}{space 2} .7673181{col 37}{space 1}    3.29{col 46}{space 3}0.001{col 54}{space 4}  1.01518{col 67}{space 3} 4.030429
+{txt}{space 9}nox {c |}{col 14}{res}{space 2}-13.62746{col 26}{space 2} 3.435092{col 37}{space 1}   -3.97{col 46}{space 3}0.000{col 54}{space 4}-20.37672{col 67}{space 3}-6.878199
+{txt}{space 10}rm {c |}{col 14}{res}{space 2} 8.249818{col 26}{space 2} .5000077{col 37}{space 1}   16.50{col 46}{space 3}0.000{col 54}{space 4} 7.267404{col 67}{space 3} 9.232232
+{txt}{space 9}age {c |}{col 14}{res}{space 2}  .009449{col 26}{space 2} .0117842{col 37}{space 1}    0.80{col 46}{space 3}0.423{col 54}{space 4}-.0137046{col 67}{space 3} .0326026
+{txt}{space 9}dis {c |}{col 14}{res}{space 2}-1.149413{col 26}{space 2} .1808711{col 37}{space 1}   -6.35{col 46}{space 3}0.000{col 54}{space 4}-1.504788{col 67}{space 3}-.7940375
+{txt}{space 4}rad_high {c |}{col 14}{res}{space 2} .7145628{col 26}{space 2} .5078972{col 37}{space 1}    1.41{col 46}{space 3}0.160{col 54}{space 4}-.2833522{col 67}{space 3} 1.712478
+{txt}{space 9}tax {c |}{col 14}{res}{space 2} .0005754{col 26}{space 2} .0022906{col 37}{space 1}    0.25{col 46}{space 3}0.802{col 54}{space 4}-.0039252{col 67}{space 3} .0050759
+{txt}{space 5}ptratio {c |}{col 14}{res}{space 2}-.5445368{col 26}{space 2} .1221107{col 37}{space 1}   -4.46{col 46}{space 3}0.000{col 54}{space 4}-.7844596{col 67}{space 3} -.304614
+{txt}{space 7}lstat {c |}{col 14}{res}{space 2} 1.871868{col 26}{space 2} .1956094{col 37}{space 1}    9.57{col 46}{space 3}0.000{col 54}{space 4} 1.487535{col 67}{space 3} 2.256201
+{txt}{space 4}rm_lstat {c |}{col 14}{res}{space 2}-.4224014{col 26}{space 2} .0333755{col 37}{space 1}  -12.66{col 46}{space 3}0.000{col 54}{space 4}-.4879775{col 67}{space 3}-.3568254
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} .0512771{col 26}{space 2} 4.953966{col 37}{space 1}    0.01{col 46}{space 3}0.992{col 54}{space 4}-9.682261{col 67}{space 3} 9.784816
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. estimates store interact
+
+. * Bảng so sánh kết quả
+
+. esttab ols robust blog llog interact, r2 aic bic ar2 se label star(* 0.1 ** 0.05 *** 0.01) title("Bang so sanh ket qua cac mo hinh") addnotes("Luu y: AIC/BIC cua mo hinh Log (3, 4) khong so sanh truc tiep duoc voi mo hinh Tuyen tinh (1, 2, 5).")
+{res}
+{txt}Bang so sanh ket qua cac mo hinh
+{txt}{hline 100}
+{txt}                              (1)             (2)             (3)             (4)             (5)   
+{txt}                             MEDV            MEDV          l_medv          l_medv            MEDV   
+{txt}{hline 100}
+{txt}CRIM                {res}       -0.121***      -0.0834***     -0.00912***                       -0.122***{txt}
+                    {res} {ralign 12:{txt:(}0.0330{txt:)}}    {ralign 12:{txt:(}0.0272{txt:)}}    {ralign 12:{txt:(}0.00130{txt:)}}                    {ralign 12:{txt:(}0.0282{txt:)}}   {txt}
+
+{txt}ZN                  {res}       0.0470***       0.0446***      0.00118**                        0.0244*  {txt}
+                    {res} {ralign 12:{txt:(}0.0139{txt:)}}    {ralign 12:{txt:(}0.0140{txt:)}}    {ralign 12:{txt:(}0.000581{txt:)}}                    {ralign 12:{txt:(}0.0126{txt:)}}   {txt}
+
+{txt}INDUS               {res}       0.0135         -0.0413       0.0000345                         -0.0113   {txt}
+                    {res} {ralign 12:{txt:(}0.0621{txt:)}}    {ralign 12:{txt:(}0.0573{txt:)}}    {ralign 12:{txt:(}0.00253{txt:)}}                    {ralign 12:{txt:(}0.0547{txt:)}}   {txt}
+
+{txt}chas_dummy          {res}        2.840***        3.220**         0.125***        0.105***        2.523***{txt}
+                    {res} {ralign 12:{txt:(}0.870{txt:)}}    {ralign 12:{txt:(}1.330{txt:)}}    {ralign 12:{txt:(}0.0354{txt:)}}    {ralign 12:{txt:(}0.0367{txt:)}}    {ralign 12:{txt:(}0.767{txt:)}}   {txt}
+
+{txt}NOX                 {res}       -18.76***       -17.14***       -0.766***                       -13.63***{txt}
+                    {res} {ralign 12:{txt:(}3.851{txt:)}}    {ralign 12:{txt:(}3.894{txt:)}}    {ralign 12:{txt:(}0.159{txt:)}}                    {ralign 12:{txt:(}3.435{txt:)}}   {txt}
+
+{txt}RM                  {res}        3.658***        3.947***       0.0972***                        8.250***{txt}
+                    {res} {ralign 12:{txt:(}0.420{txt:)}}    {ralign 12:{txt:(}0.836{txt:)}}    {ralign 12:{txt:(}0.0170{txt:)}}                    {ralign 12:{txt:(}0.500{txt:)}}   {txt}
+
+{txt}AGE                 {res}      0.00361        -0.00138       0.0000992                         0.00945   {txt}
+                    {res} {ralign 12:{txt:(}0.0133{txt:)}}    {ralign 12:{txt:(}0.0166{txt:)}}    {ralign 12:{txt:(}0.000544{txt:)}}                    {ralign 12:{txt:(}0.0118{txt:)}}   {txt}
+
+{txt}DIS                 {res}       -1.491***       -1.516***      -0.0512***                       -1.149***{txt}
+                    {res} {ralign 12:{txt:(}0.202{txt:)}}    {ralign 12:{txt:(}0.222{txt:)}}    {ralign 12:{txt:(}0.00827{txt:)}}                    {ralign 12:{txt:(}0.181{txt:)}}   {txt}
+
+{txt}RAD                 {res}        0.289***                                                                {txt}
+                    {res} {ralign 12:{txt:(}0.0669{txt:)}}                                                                   {txt}
+
+{txt}TAX                 {res}      -0.0127***     -0.00107       -0.000130                        0.000575   {txt}
+                    {res} {ralign 12:{txt:(}0.00380{txt:)}}    {ralign 12:{txt:(}0.00265{txt:)}}    {ralign 12:{txt:(}0.000106{txt:)}}                    {ralign 12:{txt:(}0.00229{txt:)}}   {txt}
+
+{txt}PTRATIO             {res}       -0.938***       -0.779***      -0.0290***                       -0.545***{txt}
+                    {res} {ralign 12:{txt:(}0.132{txt:)}}    {ralign 12:{txt:(}0.119{txt:)}}    {ralign 12:{txt:(}0.00559{txt:)}}                    {ralign 12:{txt:(}0.122{txt:)}}   {txt}
+
+{txt}LSTAT               {res}       -0.552***       -0.538***      -0.0295***                        1.872***{txt}
+                    {res} {ralign 12:{txt:(}0.0507{txt:)}}    {ralign 12:{txt:(}0.103{txt:)}}    {ralign 12:{txt:(}0.00208{txt:)}}                    {ralign 12:{txt:(}0.196{txt:)}}   {txt}
+
+{txt}rad_high            {res}                        0.712          0.0493**                         0.715   {txt}
+                    {res}                 {ralign 12:{txt:(}0.462{txt:)}}    {ralign 12:{txt:(}0.0235{txt:)}}                    {ralign 12:{txt:(}0.508{txt:)}}   {txt}
+
+{txt}l_crim              {res}                                                      -0.0429***                {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.0117{txt:)}}                   {txt}
+
+{txt}l_zn                {res}                                                     -0.00633*                  {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.00379{txt:)}}                   {txt}
+
+{txt}l_indus             {res}                                                       0.0122                   {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.0219{txt:)}}                   {txt}
+
+{txt}l_nox               {res}                                                       -0.359***                {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.111{txt:)}}                   {txt}
+
+{txt}l_rm                {res}                                                        0.334***                {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.111{txt:)}}                   {txt}
+
+{txt}l_age               {res}                                                       0.0485**                 {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.0225{txt:)}}                   {txt}
+
+{txt}l_dis               {res}                                                       -0.145***                {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.0368{txt:)}}                   {txt}
+
+{txt}l_rad               {res}                                                        0.104***                {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.0225{txt:)}}                   {txt}
+
+{txt}l_tax               {res}                                                       -0.202***                {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.0459{txt:)}}                   {txt}
+
+{txt}l_ptratio           {res}                                                       -0.607***                {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.0966{txt:)}}                   {txt}
+
+{txt}l_lstat             {res}                                                       -0.429***                {txt}
+                    {res}                                                 {ralign 12:{txt:(}0.0261{txt:)}}                   {txt}
+
+{txt}rm_lstat            {res}                                                                       -0.422***{txt}
+                    {res}                                                                 {ralign 12:{txt:(}0.0334{txt:)}}   {txt}
+
+{txt}Constant            {res}        41.62***        34.29***        3.977***        5.893***       0.0513   {txt}
+                    {res} {ralign 12:{txt:(}4.936{txt:)}}    {ralign 12:{txt:(}7.047{txt:)}}    {ralign 12:{txt:(}0.192{txt:)}}    {ralign 12:{txt:(}0.428{txt:)}}    {ralign 12:{txt:(}4.954{txt:)}}   {txt}
+{txt}{hline 100}
+{txt}Observations        {res}          506             506             506             506             506   {txt}
+{txt}R-squared           {res}        0.734           0.725           0.774           0.762           0.793   {txt}
+{txt}Adjusted R-squared  {res}        0.728           0.718           0.769           0.756           0.787   {txt}
+{txt}AIC                 {res}       3035.8          3053.1          -197.9          -171.0          2912.5   {txt}
+{txt}BIC                 {res}       3090.8          3108.1          -143.0          -116.1          2971.7   {txt}
+{txt}{hline 100}
+{txt}Standard errors in parentheses
+{txt}Luu y: AIC/BIC cua mo hinh Log (3, 4) khong so sanh truc tiep duoc voi mo hinh Tuyen tinh (1, 2, 5).
+{txt}* p<0.1, ** p<0.05, *** p<0.01
+
+{com}. * ------------------------------------------------------------------------------
+
+. * 4. TINH CHỈNH MÔ HÌNH (STEPWISE REGRESSION)
+
+. * ------------------------------------------------------------------------------
+
+. * Chạy Stepwise với danh sách biến mở rộng (bao gồm cả AGE và i.AGE_CAT)
+
+. stepwise, pr(0.05): reg medv crim zn indus chas_dummy nox rm age i.age_cat dis rad tax ptratio lstat rm_lstat
+{res}{txt}note: {bf:1b.age_cat} omitted because of estimability.
+
+{p2colset 0 23 32 2}{...}
+Wald test, begin with full model:
+{p2col:p = {res:0.6774} >= 0.0500,}removing {res:3.age_cat}{p_end}
+{p2col:p = {res:0.5450} >= 0.0500,}removing {res:indus}{p_end}
+{p2col:p = {res:0.1037} >= 0.0500,}removing {res:age}{p_end}
+{p2col:p = {res:0.1074} >= 0.0500,}removing {res:zn}{p_end}
+{p2colset 0 12 32 2}{...}
+{p2colreset}{...}
+
+      Source {c |}       SS           df       MS      Number of obs   ={res}       506
+{txt}{hline 13}{c +}{hline 34}   F(11, 494)      = {res}   182.68
+{txt}       Model {c |} {res} 34287.3748        11  3117.03407   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 8428.92082       494  17.0625927   {txt}R-squared       ={res}    0.8027
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.7983
+{txt}       Total {c |} {res} 42716.2956       505   84.586724   {txt}Root MSE        =   {res} 4.1307
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}        medv{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}crim {c |}{col 14}{res}{space 2}-.1661916{col 26}{space 2} .0286523{col 37}{space 1}   -5.80{col 46}{space 3}0.000{col 54}{space 4} -.222487{col 67}{space 3}-.1098962
+{txt}{space 9}tax {c |}{col 14}{res}{space 2}-.0105343{col 26}{space 2} .0029266{col 37}{space 1}   -3.60{col 46}{space 3}0.000{col 54}{space 4}-.0162844{col 67}{space 3}-.0047842
+{txt}{space 7}lstat {c |}{col 14}{res}{space 2} 1.909284{col 26}{space 2} .1889834{col 37}{space 1}   10.10{col 46}{space 3}0.000{col 54}{space 4} 1.537974{col 67}{space 3} 2.280595
+{txt}{space 2}chas_dummy {c |}{col 14}{res}{space 2} 2.238099{col 26}{space 2} .7456785{col 37}{space 1}    3.00{col 46}{space 3}0.003{col 54}{space 4} .7730064{col 67}{space 3} 3.703191
+{txt}{space 9}nox {c |}{col 14}{res}{space 2}-14.42618{col 26}{space 2} 3.090491{col 37}{space 1}   -4.67{col 46}{space 3}0.000{col 54}{space 4}-20.49831{col 67}{space 3}-8.354051
+{txt}{space 10}rm {c |}{col 14}{res}{space 2} 8.171147{col 26}{space 2} .4745694{col 37}{space 1}   17.22{col 46}{space 3}0.000{col 54}{space 4} 7.238723{col 67}{space 3}  9.10357
+{txt}{space 5}ptratio {c |}{col 14}{res}{space 2}-.7410871{col 26}{space 2} .1086844{col 37}{space 1}   -6.82{col 46}{space 3}0.000{col 54}{space 4}-.9546278{col 67}{space 3}-.5275464
+{txt}{space 12} {c |}
+{space 5}age_cat {c |}
+{space 2}TrungBinh  {c |}{col 14}{res}{space 2}-.8385987{col 26}{space 2} .4003708{col 37}{space 1}   -2.09{col 46}{space 3}0.037{col 54}{space 4}-1.625238{col 67}{space 3} -.051959
+{txt}{space 4}rm_lstat {c |}{col 14}{res}{space 2}-.4287479{col 26}{space 2}  .032097{col 37}{space 1}  -13.36{col 46}{space 3}0.000{col 54}{space 4}-.4918114{col 67}{space 3}-.3656845
+{txt}{space 9}dis {c |}{col 14}{res}{space 2}-1.114641{col 26}{space 2} .1436358{col 37}{space 1}   -7.76{col 46}{space 3}0.000{col 54}{space 4}-1.396853{col 67}{space 3}-.8324281
+{txt}{space 9}rad {c |}{col 14}{res}{space 2} .3021269{col 26}{space 2} .0556332{col 37}{space 1}    5.43{col 46}{space 3}0.000{col 54}{space 4} .1928201{col 67}{space 3} .4114337
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 7.881726{col 26}{space 2} 4.994295{col 37}{space 1}    1.58{col 46}{space 3}0.115{col 54}{space 4}-1.930954{col 67}{space 3} 17.69441
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. * ------------------------------------------------------------------------------
+
+. * 5. MÔ HÌNH TỐI ƯU CUỐI CÙNG (FINAL MODEL)
+
+. * ------------------------------------------------------------------------------
+
+. * Chạy lại mô hình 11 biến (Kết quả từ Stepwise) với Robust SE
+
+. 
+. reg medv crim zn chas_dummy nox rm dis rad tax ptratio lstat rm_lstat, robust
+
+{txt}Linear regression                               Number of obs     = {res}       506
+                                                {txt}F(11, 494)        =  {res}   210.81
+                                                {txt}Prob > F          = {res}    0.0000
+                                                {txt}R-squared         = {res}    0.8026
+                                                {txt}Root MSE          =    {res} 4.1318
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 14}{c |}{col 26}    Robust
+{col 1}        medv{col 14}{c |} Coefficient{col 26}  std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 8}crim {c |}{col 14}{res}{space 2}-.1643629{col 26}{space 2} .0275757{col 37}{space 1}   -5.96{col 46}{space 3}0.000{col 54}{space 4}-.2185431{col 67}{space 3}-.1101827
+{txt}{space 10}zn {c |}{col 14}{res}{space 2} .0241536{col 26}{space 2} .0112512{col 37}{space 1}    2.15{col 46}{space 3}0.032{col 54}{space 4} .0020474{col 67}{space 3} .0462598
+{txt}{space 2}chas_dummy {c |}{col 14}{res}{space 2} 2.231387{col 26}{space 2} 1.207005{col 37}{space 1}    1.85{col 46}{space 3}0.065{col 54}{space 4}-.1401095{col 67}{space 3} 4.602883
+{txt}{space 9}nox {c |}{col 14}{res}{space 2}-13.49238{col 26}{space 2} 2.788149{col 37}{space 1}   -4.84{col 46}{space 3}0.000{col 54}{space 4}-18.97047{col 67}{space 3}-8.014283
+{txt}{space 10}rm {c |}{col 14}{res}{space 2} 8.009907{col 26}{space 2} .9964491{col 37}{space 1}    8.04{col 46}{space 3}0.000{col 54}{space 4} 6.052106{col 67}{space 3} 9.967708
+{txt}{space 9}dis {c |}{col 14}{res}{space 2} -1.22208{col 26}{space 2} .1997995{col 37}{space 1}   -6.12{col 46}{space 3}0.000{col 54}{space 4}-1.614641{col 67}{space 3}-.8295182
+{txt}{space 9}rad {c |}{col 14}{res}{space 2} .2927189{col 26}{space 2} .0546692{col 37}{space 1}    5.35{col 46}{space 3}0.000{col 54}{space 4}  .185306{col 67}{space 3} .4001317
+{txt}{space 9}tax {c |}{col 14}{res}{space 2}-.0106571{col 26}{space 2} .0024419{col 37}{space 1}   -4.36{col 46}{space 3}0.000{col 54}{space 4}-.0154548{col 67}{space 3}-.0058594
+{txt}{space 5}ptratio {c |}{col 14}{res}{space 2}-.6866248{col 26}{space 2} .1108093{col 37}{space 1}   -6.20{col 46}{space 3}0.000{col 54}{space 4}-.9043405{col 67}{space 3}-.4689091
+{txt}{space 7}lstat {c |}{col 14}{res}{space 2} 1.884475{col 26}{space 2} .2537509{col 37}{space 1}    7.43{col 46}{space 3}0.000{col 54}{space 4} 1.385911{col 67}{space 3} 2.383039
+{txt}{space 4}rm_lstat {c |}{col 14}{res}{space 2} -.423341{col 26}{space 2}  .039534{col 37}{space 1}  -10.71{col 46}{space 3}0.000{col 54}{space 4}-.5010165{col 67}{space 3}-.3456656
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 7.226382{col 26}{space 2} 8.997652{col 37}{space 1}    0.80{col 46}{space 3}0.422{col 54}{space 4}-10.45201{col 67}{space 3} 24.90477
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}
+{com}. estimates store Final_Model
+
+. * ------------------------------------------------------------------------------
+
+. * 6. KIỂM ĐỊNH KHUYẾT TẬT (DIAGNOSTICS)
+
+. * ------------------------------------------------------------------------------
+
+. * Chạy lại reg thường để dùng estat
+
+. quietly reg medv crim zn chas_dummy nox rm dis rad tax ptratio lstat rm_lstat
+
+. * 6.1. Đa cộng tuyến
+
+. vif
+
+{txt}    Variable {c |}       VIF       1/VIF  
+{hline 13}{c +}{hline 22}
+{space 7}lstat {c |} {res}    54.67    0.018291
+{txt}{space 4}rm_lstat {c |} {res}    46.00    0.021739
+{txt}{space 9}tax {c |} {res}     7.27    0.137522
+{txt}{space 9}rad {c |} {res}     6.83    0.146469
+{txt}{space 9}nox {c |} {res}     3.81    0.262384
+{txt}{space 9}dis {c |} {res}     3.51    0.285289
+{txt}{space 10}rm {c |} {res}     3.43    0.291863
+{txt}{space 10}zn {c |} {res}     2.28    0.437672
+{txt}{space 5}ptratio {c |} {res}     1.80    0.554329
+{txt}{space 8}crim {c |} {res}     1.79    0.559029
+{txt}{space 2}chas_dummy {c |} {res}     1.06    0.941995
+{txt}{hline 13}{c +}{hline 22}
+    Mean VIF {c |} {res}    12.04
+
+{com}. * 6.2. Phương sai thay đổi
+
+. estat hettest
+
+{txt}Breusch–Pagan/Cook–Weisberg test for heteroskedasticity 
+Assumption: Normal error terms
+{p 0 11 0}Variable:{space 1}{res:{txt:Fitted values of} {res:medv}}{p_end}
+
+H0: Constant variance
+
+{ralign 11:chi2({res:1})} = {res}{ralign 6:31.46}
+{txt}{ralign 11:Prob > chi2} = {res}{ralign 6:0.0000}
+
+{com}. estat imtest, white
+
+{txt}White's test
+H0: Homoskedasticity
+Ha: Unrestricted heteroskedasticity
+
+{ralign 11:chi2({res:75})} = {res}{ralign 6:301.52}
+{txt}{ralign 11:Prob > chi2} = {res}{ralign 6:0.0000}
+
+{txt}Cameron & Trivedi's decomposition of IM-test
+
+{hline 21}{c TT}{hline 28}
+{ralign 20:Source} {c |}       chi2     df         p
+{hline 21}{c +}{hline 28}
+{ralign 20:Heteroskedasticity} {c |}{res}     301.52     75    0.0000
+{txt}{ralign 20:Skewness} {c |}{res}      61.10     11    0.0000
+{txt}{ralign 20:Kurtosis} {c |}{res}       4.27      1    0.0389
+{txt}{hline 21}{c +}{hline 28}
+{ralign 20:Total} {c |}{res}     366.88     87    0.0000
+{txt}{hline 21}{c BT}{hline 28}
+
+{com}. * 6.3. Tự tương quan
+
+. gen id_final = _n
+
+. tsset id_final
+{res}
+{p 0 15 2}{txt:Time variable: }{res:id_final}{txt:, }{res:{bind:1}}{txt: to }{res:{bind:506}}{p_end}
+{txt}{col 9}Delta: {res}1 unit
+
+{com}. estat dwatson
+
+{txt}Durbin–Watson d-statistic({res} 12{txt},{res}   506{txt}) = {res} 1.189461
+
+{com}. * 6.4. Phân phối chuẩn phần dư
+
+. predict res_final, resid
+
+. histogram res_final, normal title("Phan phoi phan du (Final Model)")
+{txt}(bin={res}22{txt}, start={res}-21.662579{txt}, width={res}2.2832738{txt})
+{res}
+{com}. kdensity res_final, normal title("Kernel Density Estimate vs Normal")
+{res}
+{com}. qnorm res_final, title("Normal Q-Q Plot")
+{res}
+{com}. swilk res_final
+
+                   {txt}Shapiro–Wilk W test for normal data
+
+    Variable {c |}        Obs{col 33}W{col 45}V{col 55}z       Prob>z
+{hline 13}{c +}{hline 54}
+   res_final {c |} {res}       506    0.86576     45.647     9.190    0.00000
+
+{com}. * 6.5. Chỉ định mô hình
+
+. estat ovtest
+
+{txt}Ramsey RESET test for omitted variables
+Omitted: Powers of fitted values of {res:medv}
+
+H0: Model has no omitted variables
+
+{ralign 9:F({res:3}, {res:491})} = {res}{ralign 6:16.39}
+{txt}{ralign 9:Prob > F} = {res}{ralign 6:0.0000}
+
+{com}. * ------------------------------------------------------------------------------
+
+. * 7. MINH HỌA ĐỒ THỊ (VISUALIZATION)
+
+. * ------------------------------------------------------------------------------
+
+. rvfplot, yline(0) title("Do thi Phan du vs Gia tri du bao (Fitted)")
+{res}
+{com}. 
+. twoway (scatter medv rm) (lfit medv rm), title("Tuong quan giua So phong (RM) va Gia nha")
+{res}
+{com}. graph matrix medv rm lstat nox, title("Ma tran tuong quan cac bien chinh")
+{res}
+{com}. * ------------------------------------------------------------------------------
+
+. * 8. DỰ BÁO VÀ BACK-TESTING
+
+. * ------------------------------------------------------------------------------
+
+. * 8.1. Tính toán giá trị dự báo
+
+. predict medv_hat, xb
+
+. summarize medv medv_hat
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}medv {c |}{res}        506    22.53281    9.197104          5         50
+{txt}{space 4}medv_hat {c |}{res}        506    22.53281    8.239323   4.406155    47.0469
+
+{com}. * 8.2. Xem chi tiết 10 quan sát đầu
+
+. list medv medv_hat in 1/10
+{txt}
+     {c TLC}{hline 6}{c -}{hline 10}{c TRC}
+     {c |} {res}medv   medv_hat {txt}{c |}
+     {c LT}{hline 6}{c -}{hline 10}{c RT}
+  1. {c |} {res}  24   30.22392 {txt}{c |}
+  2. {c |} {res}21.6   24.41897 {txt}{c |}
+  3. {c |} {res}34.7   33.49582 {txt}{c |}
+  4. {c |} {res}33.4   32.18927 {txt}{c |}
+  5. {c |} {res}36.2   30.46394 {txt}{c |}
+     {c LT}{hline 6}{c -}{hline 10}{c RT}
+  6. {c |} {res}28.7   26.44563 {txt}{c |}
+  7. {c |} {res}22.9   21.30462 {txt}{c |}
+  8. {c |} {res}27.1   16.36365 {txt}{c |}
+  9. {c |} {res}16.5    10.8613 {txt}{c |}
+ 10. {c |} {res}18.9   16.93907 {txt}{c |}
+     {c BLC}{hline 6}{c -}{hline 10}{c BRC}
+
+{com}. * 8.3. Đồ thị so sánh Thực tế vs Dự báo
+
+. twoway (scatter medv_hat medv, mcolor(blue%40)) (lfit medv_hat medv, lcolor(red) lwidth(thick)), title("Gia Du bao vs Gia Thuc te (Adj R2 = 79.8%)") ytitle("Gia Du bao (Predicted)") xtitle("Gia Thuc te (Actual)")
+{res}
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\Han\Desktop\UEL\Năm 2 - HK4\Kinh tế lượng_Lương Thanh Quỳnh (DH_HK251)\Tiểu luận Giữa kì\K244131500_KTL_TIỂU LUẬN.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}21 Nov 2025, 08:51:51
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
